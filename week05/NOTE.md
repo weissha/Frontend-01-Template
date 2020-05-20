@@ -2,9 +2,36 @@
   - 在JS执行之前会对执行JS所需的内置对象进行实例化，产生Realm，每个Realm里面的同一个对象不相等，比如浏览器的全局Object与iframe里面contentWindow的Object不相等
 
   - JS执行粒度
+    - Realm
     - 宏任务
     - 微任务
-    - 函数调用
+    - 函数调用（Execution Context）
+
+  Execution Context Stack 执行栈
+
+  进入一个函数时，会发生一次 Execution Context Stack 的 push，当函数返回的时候会发生一次 pop
+
+  - code evaluation state 代码执行的位置 |  async 函数、generator 函数 有用，正常函数不需要存
+
+  - Function 如果 Execution Context 执行的是一个函数就会有 Function，可能是 null
+
+  - Script or Module
+
+  - Generator  只有 Generator 产生的 Execution Context 才会有这个属性
+
+  - Realm
+
+  - LexicalEnvironment
+
+    - this
+    - new.target
+    - super
+    - 变量
+
+  - VariableEnvironment
+
+    用于处理 var 的声明
+
     - 语句/声明
     - 表达式
     - 直接量/变量/this
@@ -45,17 +72,21 @@
   - 七层网络模型
     - 应用
     - 表示
-    - 会话
-    - 传输
-    - 网络
-    - 数据链路
-    - 物理层
+    - 会话          - HTTP（应用层）
+    - 传输          - TCP（传输层）
+    - 网络          - Internet（网络层）
+    - 数据链路   
+    - 物理层       - 4G/5G/WIFI（数据链路层）4$
 
-  - 前端开发工作不需要过多掌握上面的七层网络模型，要关注下面的四个方面，分别对应七层网络的某部分
-    - HTTP（应用层）
-    - TCP（传输层）
-    - Internet（网络层）
-    - 4G/5G/WIFI（数据链路层）
+  - TCP和IP区别：
+    - TCP
+      - 流
+      - 端口
+      - require('net')
+    - IP
+      - 包
+      - IP地址
+      - libnet/libpcap
 
   - TCP
 
@@ -95,12 +126,9 @@
         - 状态行 - HTTP版本、状态码、原因短语
 
           - 状态码
-
-            `1XX 2XX 3XX 4XX 5XX`
-  
             - 2XX  200 ok
             - 3XX  304 Not Modifed
-          - 4XX 400 Bad Request / 404 Not Found
+            - 4XX 400 Bad Request / 404 Not Found
             - 5XX  Internal Server Error
 
         - 首部字段
